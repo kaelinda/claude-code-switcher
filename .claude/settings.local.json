@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(npm install:*)",
+      "Bash(npm config set registry https://registry.npmjs.org/)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(node:*)",
+      "Bash(rm:*)",
+      "Bash(ccx:*)",
+      "Bash(cat:*)",
+      "Bash(env:*)",
+      "Bash(echo:*)",
+      "Bash(source:*)",
+      "Bash(npm run lint)",
+      "Bash(./test_env_fix.sh:*)",
+      "Bash(./demo_fix.sh:*)",
+      "Bash(npm run pkg:*)",
+      "Bash(npm link:*)",
+      "Bash(sudo npm:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm test)",
+      "Bash(gh repo create:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
