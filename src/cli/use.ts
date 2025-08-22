@@ -36,6 +36,17 @@ export async function useCommand(providerName: string, options: {
       return;
     }
     
+    // If in eval mode, output export commands and exit immediately (skip all other operations)
+    if (options.eval) {
+      const envConfig = {
+        ANTHROPIC_AUTH_TOKEN: provider.api_key,
+        ANTHROPIC_BASE_URL: provider.base_url,
+        ANTHROPIC_MODEL: provider.model,
+      };
+      console.log(exportEnvVars(envConfig));
+      return;
+    }
+
     // Test connection before switching (unless skipped)
     if (!options.skipTest) {
       console.log(colors.info(`${icons.rocket} Testing connection to ${formatProviderName(normalizedProvider)}...`));
@@ -71,13 +82,6 @@ export async function useCommand(providerName: string, options: {
 
     // Apply provider configuration to environment variables
     await applyProviderEnv(normalizedProvider);
-
-    // If in eval mode, output export commands and exit
-    if (options.eval) {
-      const env = await getCurrentProviderEnv();
-      console.log(exportEnvVars(env));
-      return;
-    }
 
     console.log(format.success(`\n${icons.check} Successfully switched to ${formatProviderName(normalizedProvider)}`));
     

@@ -14,6 +14,7 @@ import { testCommand } from './cli/test';
 import { configCommand } from './cli/config';
 import { migrateCommand } from './cli/migrate';
 import { envCommand } from './cli/env';
+import { syncUseCommand } from './cli/sync-use';
 
 // Program setup
 program
@@ -73,6 +74,11 @@ program
   .description('Migrate MCP configurations from other tools (Cursor, VS Code, etc.)')
   .action(migrateCommand);
 
+program
+  .command('sync-use')
+  .description('Setup ccuse shell function for immediate provider switching')
+  .action(syncUseCommand);
+
 // Environment variables command
 envCommand(program);
 
@@ -93,6 +99,7 @@ program
     console.log('  test [provider]       Test API provider connection');
     console.log('  config                Open configuration file');
     console.log('  migrate               Migrate MCP configurations from other tools');
+    console.log('  sync-use              Setup ccuse shell function for immediate switching');
     console.log('  env                   Manage environment variables');
     console.log('  help                  Display help information');
     console.log('  --version             Show version information\n');
@@ -100,6 +107,7 @@ program
     console.log('  cc-sw list              # List all providers');
     console.log('  cc-sw use anthropic     # Switch to Anthropic provider and model');
     console.log('  cc-sw test openai       # Test OpenAI connection');
+    console.log('  cc-sw sync-use          # Setup ccuse function for immediate switching');
     console.log('  cc-sw config            # Open config file');
     console.log('  cc-sw env --show        # Show current environment variables');
     console.log('  eval $(cc-sw env --export)  # Apply environment variables immediately\n');

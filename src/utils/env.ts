@@ -105,7 +105,7 @@ export async function addEnvToConfigFile(
     content = await fs.readFile(configPath, 'utf8');
   }
   
-  // Remove existing CCX environment variables
+  // Remove existing cc-sw environment variables
   content = removeExistingEnvVars(content);
   
   // Add new environment variables
@@ -117,7 +117,7 @@ export async function addEnvToConfigFile(
 // Generate environment variable block
 function generateEnvBlock(env: EnvironmentConfig): string {
   const lines = [
-    '# CCX - Claude Code API Provider Configuration',
+    '# cc-sw - Claude Code API Provider Configuration',
     'export ANTHROPIC_AUTH_TOKEN="' + env.ANTHROPIC_AUTH_TOKEN + '"',
     'export ANTHROPIC_BASE_URL="' + env.ANTHROPIC_BASE_URL + '"',
   ];
@@ -129,29 +129,29 @@ function generateEnvBlock(env: EnvironmentConfig): string {
   return lines.join('\n');
 }
 
-// Remove existing CCX environment variables
+// Remove existing cc-sw environment variables
 function removeExistingEnvVars(content: string): string {
   const lines = content.split('\n');
   const filteredLines: string[] = [];
-  let inCcxBlock = false;
+  let inCcswBlock = false;
   
   for (const line of lines) {
     const trimmed = line.trim();
     
-    if (trimmed.startsWith('# CCX - Claude Code API Provider Configuration')) {
-      inCcxBlock = true;
+    if (trimmed.startsWith('# cc-sw - Claude Code API Provider Configuration')) {
+      inCcswBlock = true;
       continue;
     }
     
-    if (inCcxBlock && trimmed.startsWith('export ANTHROPIC_')) {
+    if (inCcswBlock && trimmed.startsWith('export ANTHROPIC_')) {
       continue;
     }
     
-    if (inCcxBlock && !trimmed.startsWith('export ANTHROPIC_') && trimmed !== '') {
-      inCcxBlock = false;
+    if (inCcswBlock && !trimmed.startsWith('export ANTHROPIC_') && trimmed !== '') {
+      inCcswBlock = false;
     }
     
-    if (!inCcxBlock) {
+    if (!inCcswBlock) {
       filteredLines.push(line);
     }
   }
@@ -260,15 +260,19 @@ export function exportEnvVars(env: Partial<EnvironmentConfig>): string {
   const lines = [];
   
   if (env.ANTHROPIC_AUTH_TOKEN) {
-    lines.push(`export ANTHROPIC_AUTH_TOKEN="${env.ANTHROPIC_AUTH_TOKEN}"`);
+    // Clean the token value by removing any newlines or extra whitespace
+    const cleanToken = env.ANTHROPIC_AUTH_TOKEN.trim().replace(/\n/g, '');
+    lines.push(`export ANTHROPIC_AUTH_TOKEN="${cleanToken}"`);
   }
   
   if (env.ANTHROPIC_BASE_URL) {
-    lines.push(`export ANTHROPIC_BASE_URL="${env.ANTHROPIC_BASE_URL}"`);
+    const cleanUrl = env.ANTHROPIC_BASE_URL.trim().replace(/\n/g, '');
+    lines.push(`export ANTHROPIC_BASE_URL="${cleanUrl}"`);
   }
   
   if (env.ANTHROPIC_MODEL) {
-    lines.push(`export ANTHROPIC_MODEL="${env.ANTHROPIC_MODEL}"`);
+    const cleanModel = env.ANTHROPIC_MODEL.trim().replace(/\n/g, '');
+    lines.push(`export ANTHROPIC_MODEL="${cleanModel}"`);
   }
   
   return lines.join('\n');

@@ -73,6 +73,7 @@ npm install -g cc-sw
 | `cc-sw migrate` | | Migrate MCP configurations from other tools |
 | `cc-sw help` | | Display help information |
 | `cc-sw --version` | | Show version information |
+| `cc-sw sync-use` | | Synchronize and switch to a provider using shell integration |
 
 ## Supported Providers
 
@@ -276,6 +277,184 @@ cc-sw use anthropic
 cc-sw current
 ```
 
+## cc-sw sync-use 命令详细说明
+
+`cc-sw sync-use` 是一个高级命令，用于通过 shell 集成实现更智能的 API 提供商切换。它结合了 `use` 命令的切换功能和 shell 环境变量的同步能力。
+
+### 功能特点
+
+- **Shell 环境同步**: 自动同步切换的提供商到当前 shell 环境
+- **ZSH 集成**: 支持 ZSH shell 的自动补全和提示
+- **环境变量管理**: 自动设置相关的环境变量
+- **即时生效**: 无需重新打开终端窗口
+
+### 使用场景
+
+**1. 在脚本中使用**
+```bash
+#!/bin/bash
+# 在部署脚本中使用 sync-use
+cc-sw sync-use anthropic
+echo "已切换到 Anthropic 提供商"
+```
+
+**2. 在 CI/CD 流程中使用**
+```bash
+# 在 CI 环境中设置提供商
+cc-sw sync-use deepseek
+echo "DEEPSEEK_API_KEY 已设置"
+```
+
+**3. 与 shell 别名配合使用**
+```bash
+# 在 ~/.zshrc 中设置别名
+alias use-kimi='cc-sw sync-use kimi'
+alias use-anthropic='cc-sw sync-use anthropic'
+```
+
+### 与 cc-sw use 的区别
+
+| 特性 | cc-sw use | cc-sw sync-use |
+|------|-----------|----------------|
+| 基本功能 | ✅ 切换提供商 | ✅ 切换提供商 |
+| Shell 集成 | ❌ 无 | ✅ 有 |
+| 环境变量 | ❌ 不设置 | ✅ 自动设置 |
+| 即时生效 | ✅ 是 | ✅ 是 |
+| 脚本友好 | ✅ 支持 | ✅ 更好支持 |
+
+### 实际使用示例
+
+**示例 1：基本使用**
+```bash
+# 使用 sync-use 切换到 Kimi
+cc-sw sync-use kimi
+
+# 验证环境变量已设置
+echo $CURRENT_PROVIDER  # 输出: kimi
+echo $CURRENT_MODEL     # 输出: moonshot-v1-32k
+```
+
+**示例 2：在项目中使用**
+```bash
+# 在项目根目录创建 .cc-sw 文件指定默认提供商
+echo "kimi" > .cc-sw
+
+# 使用 sync-use 加载项目配置
+cc-sw sync-use $(cat .cc-sw)
+```
+
+**示例 3：与 shell 函数集成**
+```bash
+# 在 ~/.zshrc 中添加函数
+switch-provider() {
+    if [ -f .cc-sw ]; then
+        cc-sw sync-use $(cat .cc-sw)
+        echo "已切换到 $(cat .cc-sw) 提供商"
+    else
+        echo "未找到 .cc-sw 配置文件"
+    fi
+}
+
+# 使用函数
+switch-provider
+```
+
+### Shell 集成设置
+
+**ZSH 集成**
+```bash
+# 安装 shell 集成
+curl -sSL https://raw.githubusercontent.com/your-repo/cc-sw/main/install-shell-integration.sh | bash
+
+# 或者手动添加到 ~/.zshrc
+echo 'source ~/.cc-sw-completion.zsh' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Bash 集成**
+```bash
+# 添加到 ~/.bashrc
+echo 'source ~/.cc-sw-completion.bash' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### 环境变量支持
+
+`cc-sw sync-use` 会自动设置以下环境变量：
+
+```bash
+# 基础信息
+CURRENT_PROVIDER=当前提供商名称
+CURRENT_MODEL=当前模型名称
+CURRENT_BASE_URL=当前基础URL
+
+# API 密钥（可选）
+ANTHROPIC_API_KEY=sk-xxx
+OPENAI_API_KEY=sk-xxx
+KIMI_API_KEY=sk-xxx
+DEEPSEEK_API_KEY=sk-xxx
+
+# 提供商特定变量
+PROVIDER_KIMI_API_KEY=sk-xxx
+PROVIDER_ANTHROPIC_API_KEY=sk-xxx
+```
+
+### 配置文件同步
+
+**项目级配置**
+```bash
+# 在项目根目录创建配置文件
+mkdir -p .cc-sw
+echo 'kimi' > .cc-sw/default-provider
+
+# 使用 sync-use 加载项目配置
+cc-sw sync-use --project-config
+```
+
+**团队共享配置**
+```bash
+# 创建团队共享配置
+echo 'kimi' > .cc-sw-team
+
+# 团队成员使用
+cp .cc-sw-team ~/.cc-sw/default-provider
+cc-sw sync-use $(cat ~/.cc-sw/default-provider)
+```
+
+### 故障排除
+
+**问题：sync-use 命令未找到**
+```bash
+# 重新安装 shell 集成
+npm run install-shell-integration
+
+# 或者手动检查路径
+which cc-sw
+ls -la ~/.cc-sw-completion.*
+```
+
+**问题：环境变量未设置**
+```bash
+# 检查 shell 集成是否正确安装
+echo $SHELL
+type cc-sw-sync-use
+
+# 手动设置环境变量
+export CURRENT_PROVIDER=kimi
+export CURRENT_MODEL=moonshot-v1-32k
+```
+
+**问题：ZSH 自动补全不工作**
+```bash
+# 重新生成补全脚本
+cc-sw completion zsh > ~/.cc-sw-completion.zsh
+source ~/.cc-sw-completion.zsh
+
+# 添加到 .zshrc
+echo 'fpath=(~/.cc-sw-completion $fpath)' >> ~/.zshrc
+echo 'autoload -U compinit && compinit' >> ~/.zshrc
+```
+
 ## MCP Migration
 
 The `cc-sw migrate` command allows you to easily migrate MCP (Model Context Protocol) configurations from other tools like Cursor, VS Code, Windsurf, Cline, and Claude Desktop to Claude Code.
@@ -390,6 +569,9 @@ cc-sw current
 # Switch to Anthropic
 cc-sw use anthropic
 
+# Use sync-use for shell integration (advanced)
+cc-sw sync-use kimi
+
 # Test current provider
 cc-sw test
 
@@ -417,6 +599,9 @@ cc-sw add custom-provider
 # Test connection before switching
 cc-sw test anthropic
 cc-sw use anthropic
+
+# Use sync-use for shell integration and environment variables
+cc-sw sync-use deepseek
 
 # Batch operations
 cc-sw add provider1 && cc-sw add provider2 && cc-sw use provider1
