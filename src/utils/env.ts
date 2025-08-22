@@ -219,20 +219,39 @@ export function reloadShell(): void {
     if (shell === 'zsh') {
       console.log(chalk.cyan('✓ Environment variables have been automatically applied to your current session'));
       console.log(chalk.gray('Configuration also saved to ~/.zshrc for future sessions'));
+      console.log(chalk.yellow('Note: For immediate effect in your current shell, run:'));
+      console.log(chalk.cyan('  source ~/.zshrc'));
     } else if (shell === 'bash') {
       console.log(chalk.cyan('✓ Environment variables have been automatically applied to your current session'));
       console.log(chalk.gray('Configuration also saved to ~/.bashrc for future sessions'));
+      console.log(chalk.yellow('Note: For immediate effect in your current shell, run:'));
+      console.log(chalk.cyan('  source ~/.bashrc'));
     } else if (shell === 'fish') {
       console.log(chalk.cyan('✓ Environment variables have been automatically applied to your current session'));
       console.log(chalk.gray('Configuration also saved to ~/.config/fish/config.fish for future sessions'));
+      console.log(chalk.yellow('Note: For immediate effect in your current shell, run:'));
+      console.log(chalk.cyan('  source ~/.config/fish/config.fish'));
     } else {
       console.log(chalk.cyan('✓ Environment variables have been applied to your current session'));
+      console.log(chalk.yellow('Note: To apply changes to your current shell, run:'));
+      console.log(chalk.cyan('  source your shell configuration file'));
     }
     
     console.log(chalk.green('\nYour Claude Code provider has been switched successfully!'));
     
   } catch (error) {
     console.log(chalk.cyan('✓ Environment variables have been applied to your current session'));
+    console.log(chalk.yellow('Note: To apply changes to your current shell, run:'));
+    const shell = getShellName(getCurrentShell());
+    if (shell === 'zsh') {
+      console.log(chalk.cyan('  source ~/.zshrc'));
+    } else if (shell === 'bash') {
+      console.log(chalk.cyan('  source ~/.bashrc'));
+    } else if (shell === 'fish') {
+      console.log(chalk.cyan('  source ~/.config/fish/config.fish'));
+    } else {
+      console.log(chalk.cyan('  source your shell configuration file'));
+    }
   }
 }
 
@@ -282,6 +301,42 @@ export function applyToCurrentSession(env: EnvironmentConfig): void {
   }
   
   console.log(chalk.green('✓ Environment variables applied to current session'));
+  
+  // Attempt to reload shell configuration for immediate effect
+  // Note: This runs in a subprocess and won't affect the parent shell
+  // but we provide clear instructions for the user
+  try {
+    const shell = getShellName(getCurrentShell());
+    if (shell === 'zsh') {
+      // For zsh, we can try to source the file but it won't affect parent shell
+      execSync('source ~/.zshrc', { stdio: 'inherit', shell: '/bin/zsh' });
+      console.log(chalk.green('✓ Shell configuration reloaded in subprocess'));
+      console.log(chalk.yellow('Note: For immediate effect in your current shell, run:'));
+      console.log(chalk.cyan('  source ~/.zshrc'));
+    } else if (shell === 'bash') {
+      execSync('source ~/.bashrc', { stdio: 'inherit', shell: '/bin/bash' });
+      console.log(chalk.green('✓ Shell configuration reloaded in subprocess'));
+      console.log(chalk.yellow('Note: For immediate effect in your current shell, run:'));
+      console.log(chalk.cyan('  source ~/.bashrc'));
+    } else if (shell === 'fish') {
+      execSync('source ~/.config/fish/config.fish', { stdio: 'inherit', shell: '/usr/bin/fish' });
+      console.log(chalk.green('✓ Shell configuration reloaded in subprocess'));
+      console.log(chalk.yellow('Note: For immediate effect in your current shell, run:'));
+      console.log(chalk.cyan('  source ~/.config/fish/config.fish'));
+    }
+  } catch (error) {
+    const shell = getShellName(getCurrentShell());
+    console.log(chalk.yellow('Note: To apply changes to your current shell, run:'));
+    if (shell === 'zsh') {
+      console.log(chalk.cyan('  source ~/.zshrc'));
+    } else if (shell === 'bash') {
+      console.log(chalk.cyan('  source ~/.bashrc'));
+    } else if (shell === 'fish') {
+      console.log(chalk.cyan('  source ~/.config/fish/config.fish'));
+    } else {
+      console.log(chalk.cyan('  source your shell configuration file'));
+    }
+  }
 }
 
 // Show environment variables status
@@ -314,7 +369,16 @@ export function showEnvStatus(config: Partial<EnvironmentConfig>, active: Partia
     console.log(chalk.red('\nEnvironment variables are not properly configured!'));
   } else if (!isActive) {
     console.log(chalk.yellow('\nEnvironment variables are configured but not active in current session.'));
-    console.log(chalk.cyan('Please restart your terminal or run: source ~/.bashrc'));
+    const shell = getShellName(getCurrentShell());
+    if (shell === 'zsh') {
+      console.log(chalk.cyan('Please restart your terminal or run: source ~/.zshrc'));
+    } else if (shell === 'bash') {
+      console.log(chalk.cyan('Please restart your terminal or run: source ~/.bashrc'));
+    } else if (shell === 'fish') {
+      console.log(chalk.cyan('Please restart your terminal or run: source ~/.config/fish/config.fish'));
+    } else {
+      console.log(chalk.cyan('Please restart your terminal or source your shell configuration file'));
+    }
   } else if (JSON.stringify(config) !== JSON.stringify(active)) {
     console.log(chalk.yellow('\nConfiguration and active values differ. Please restart your terminal.'));
   } else {
