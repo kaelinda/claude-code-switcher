@@ -5,7 +5,7 @@ import path from 'path';
 import os from 'os';
 
 describe('CCX CLI Integration Tests', () => {
-  const tempDir = path.join(os.tmpdir(), 'ccx-test');
+  const tempDir = path.join(os.tmpdir(), 'cc-sw-test');
   const originalProvidersPath = path.join(os.homedir(), '.claude', 'providers.json');
   const originalZshrcPath = path.join(os.homedir(), '.zshrc');
   let backupProvidersPath: string;

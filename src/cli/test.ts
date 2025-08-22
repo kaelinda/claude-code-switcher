@@ -13,7 +13,7 @@ export async function testCommand(provider?: string) {
       // Test current provider
       if (!currentProvider) {
         console.log(format.error('No current provider set'));
-        console.log(colors.info('Use "ccx use <provider>" to set a provider first'));
+        console.log(colors.info('Use "cc-sw use <provider>" to set a provider first'));
         return;
       }
       provider = currentProvider;

@@ -9,7 +9,7 @@ export async function listCommand(): Promise<void> {
     
     if (Object.keys(config.providers).length === 0) {
       console.log(format.warning('No API providers configured.'));
-      console.log(colors.info('Use "ccx add <provider>" to add a new provider.\n'));
+      console.log(colors.info('Use "cc-sw add <provider>" to add a new provider.\n'));
       return;
     }
 

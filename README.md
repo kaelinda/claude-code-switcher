@@ -19,7 +19,7 @@ A powerful command-line tool for switching between different API providers and t
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd ccx
+cd cc-sw
 
 # Install dependencies
 npm install
@@ -34,51 +34,51 @@ npm install -g .
 ### Using Package Manager (when published)
 
 ```bash
-npm install -g ccx
+npm install -g cc-sw
 ```
 
 ## Quick Start
 
 1. **Add your first provider:**
    ```bash
-   ccx add anthropic
+   cc-sw add anthropic
    ```
 
 2. **List available providers:**
    ```bash
-   ccx list
+   cc-sw list
    ```
 
 3. **Switch to a provider:**
    ```bash
-   ccx use anthropic
+   cc-sw use anthropic
    ```
 
 4. **Test your connection:**
    ```bash
-   ccx test
+   cc-sw test
    ```
 
 ## Commands
 
 | Command | Alias | Description |
 |---------|-------|-------------|
-| `ccx list` | `ls` | List all available API providers |
-| `ccx current` | `curr` | Show current API provider and model |
-| `ccx use <provider>` | | Switch to specified API provider and model |
-| `ccx add <provider>` | | Add new API provider configuration |
-| `ccx remove <provider>` | | Remove API provider configuration |
-| `ccx test [provider]` | | Test API provider connection |
-| `ccx config` | | Open configuration file |
-| `ccx migrate` | | Migrate MCP configurations from other tools |
-| `ccx help` | | Display help information |
-| `ccx --version` | | Show version information |
+| `cc-sw list` | `ls` | List all available API providers |
+| `cc-sw current` | `curr` | Show current API provider and model |
+| `cc-sw use <provider>` | | Switch to specified API provider and model |
+| `cc-sw add <provider>` | | Add new API provider configuration |
+| `cc-sw remove <provider>` | | Remove API provider configuration |
+| `cc-sw test [provider]` | | Test API provider connection |
+| `cc-sw config` | | Open configuration file |
+| `cc-sw migrate` | | Migrate MCP configurations from other tools |
+| `cc-sw help` | | Display help information |
+| `cc-sw --version` | | Show version information |
 
 ## Supported Providers
 
 ### Anthropic
 ```bash
-ccx add anthropic
+cc-sw add anthropic
 ```
 Configuration:
 - API Key: Your Anthropic API key
@@ -87,7 +87,7 @@ Configuration:
 
 ### OpenAI
 ```bash
-ccx add openai
+cc-sw add openai
 ```
 Configuration:
 - API Key: Your OpenAI API key
@@ -96,18 +96,27 @@ Configuration:
 
 ### Kimi (月之暗面)
 ```bash
-ccx add kimi
+cc-sw add kimi
 ```
 Configuration:
 - API Key: Your Kimi API key
 - Base URL: `https://api.moonshot.cn/v1`
 - Model: `moonshot-v1-8k` 或 `moonshot-v1-32k` 或 `moonshot-v1-128k`
 
+### DeepSeek
+```bash
+cc-sw add deepseek
+```
+Configuration:
+- API Key: Your DeepSeek API key
+- Base URL: `https://api.deepseek.com/anthropic`
+- Model: `deepseek-chat`
+
 ### Custom Providers
 You can add any custom API provider that follows the OpenAI-compatible format:
 
 ```bash
-ccx add my-provider
+cc-sw add my-provider
 ```
 
 ## Configuration
@@ -131,6 +140,12 @@ The configuration is stored in `~/.claude/providers.json`:
       "api_key": "sk-...",
       "base_url": "https://api.openai.com/v1",
       "model": "gpt-4"
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "api_key": "sk-...",
+      "base_url": "https://api.deepseek.com/anthropic",
+      "model": "deepseek-chat"
     }
   }
 }
@@ -141,13 +156,14 @@ The configuration is stored in `~/.claude/providers.json`:
 You can set the following environment variables:
 
 - `EDITOR`: Default editor for config command (default: nano)
-- `CCX_CONFIG_DIR`: Custom configuration directory
+- `CC_SW_CONFIG_DIR`: Custom configuration directory
+- `DEEPSEEK_API_KEY`: DeepSeek API key (can be used with cc-sw add deepseek)
 
 ## 详细使用指南
 
-### ccx use 命令详细说明
+### cc-sw use 命令详细说明
 
-`ccx use` 是核心命令，用于切换 API 提供商和对应的模型。当您切换到某个提供商时，ccx 会自动：
+`cc-sw use` 是核心命令，用于切换 API 提供商和对应的模型。当您切换到某个提供商时，cc-sw 会自动：
 
 1. 更新 Claude Code 的配置文件 (`~/.claude/settings.json`)
 2. 切换 API 密钥
@@ -159,7 +175,7 @@ You can set the following environment variables:
 **1. 添加 Kimi 提供商**
 
 ```bash
-ccx add kimi
+cc-sw add kimi
 ```
 
 系统会提示您输入以下信息：
@@ -174,16 +190,16 @@ ccx add kimi
 **2. 测试 Kimi 连接**
 
 ```bash
-ccx test kimi
+cc-sw test kimi
 ```
 
 **3. 切换到 Kimi**
 
 ```bash
-ccx use kimi
+cc-sw use kimi
 ```
 
-执行此命令后，ccx 会：
+执行此命令后，cc-sw 会：
 - ✅ 测试 Kimi 的 API 连接
 - ✅ 备份当前配置
 - ✅ 更新提供商配置为 Kimi
@@ -195,7 +211,7 @@ ccx use kimi
 **4. 验证切换结果**
 
 ```bash
-ccx current
+cc-sw current
 ```
 
 输出示例：
@@ -214,14 +230,14 @@ API Key: sk-xxxxxxxx...
 
 ```bash
 # 添加 8K 版本
-ccx add kimi-8k
+cc-sw add kimi-8k
 # Display name: Kimi 8K
 # API Key: sk-您的Kimi API密钥
 # Base URL: https://api.moonshot.cn/v1
 # Model: moonshot-v1-8k
 
 # 添加 128K 版本
-ccx add kimi-128k
+cc-sw add kimi-128k
 # Display name: Kimi 128K
 # API Key: sk-您的Kimi API密钥
 # Base URL: https://api.moonshot.cn/v1
@@ -232,37 +248,37 @@ ccx add kimi-128k
 
 ```bash
 # 切换到 8K 模型
-ccx use kimi-8k
+cc-sw use kimi-8k
 
 # 切换到 128K 模型
-ccx use kimi-128k
+cc-sw use kimi-128k
 ```
 
 ### 实际工作流程示例
 
 ```bash
 # 1. 查看所有可用的提供商
-ccx list
+cc-sw list
 
 # 2. 查看当前使用的提供商和模型
-ccx current
+cc-sw current
 
 # 3. 切换到 Kimi 进行长文本处理
-ccx use kimi-128k
+cc-sw use kimi-128k
 
 # 4. 验证连接
-ccx test
+cc-sw test
 
 # 5. 切换回 Anthropic 进行代码任务
-ccx use anthropic
+cc-sw use anthropic
 
 # 6. 再次验证
-ccx current
+cc-sw current
 ```
 
 ## MCP Migration
 
-The `ccx migrate` command allows you to easily migrate MCP (Model Context Protocol) configurations from other tools like Cursor, VS Code, Windsurf, Cline, and Claude Desktop to Claude Code.
+The `cc-sw migrate` command allows you to easily migrate MCP (Model Context Protocol) configurations from other tools like Cursor, VS Code, Windsurf, Cline, and Claude Desktop to Claude Code.
 
 ### Supported Tools
 
@@ -276,7 +292,7 @@ The `ccx migrate` command allows you to easily migrate MCP (Model Context Protoc
 
 ```bash
 # Run the migration tool
-ccx migrate
+cc-sw migrate
 
 # Interactive migration process:
 # 1. Detects existing MCP configurations
@@ -296,7 +312,7 @@ ccx migrate
 ### Example Migration
 
 ```bash
-$ ccx migrate
+$ cc-sw migrate
 
 🔄 MCP Configuration Migration Tool
 
@@ -366,44 +382,44 @@ After migration, your Claude Code configuration will include:
 
 ```bash
 # List all providers
-ccx list
+cc-sw list
 
 # Show current provider
-ccx current
+cc-sw current
 
 # Switch to Anthropic
-ccx use anthropic
+cc-sw use anthropic
 
 # Test current provider
-ccx test
+cc-sw test
 
 # Test specific provider
-ccx test openai
+cc-sw test openai
 
 # Add new provider
-ccx add my-custom-provider
+cc-sw add my-custom-provider
 
 # Remove provider
-ccx remove old-provider
+cc-sw remove old-provider
 
 # Open config file
-ccx config
+cc-sw config
 ```
 
 ### Advanced Usage
 
 ```bash
 # Add provider with custom headers
-ccx add custom-provider
+cc-sw add custom-provider
 # When prompted, enter JSON headers:
 # {"Authorization": "Bearer token", "X-Custom": "value"}
 
 # Test connection before switching
-ccx test anthropic
-ccx use anthropic
+cc-sw test anthropic
+cc-sw use anthropic
 
 # Batch operations
-ccx add provider1 && ccx add provider2 && ccx use provider1
+cc-sw add provider1 && cc-sw add provider2 && cc-sw use provider1
 ```
 
 ### 工作原理
@@ -418,7 +434,7 @@ CCX通过管理Claude Code的配置文件来实现API提供商和模型的切换
 
 **2. 切换流程**
 ```
-用户执行 ccx use kimi
+用户执行 cc-sw use kimi
         ↓
 测试Kimi API连接
         ↓
@@ -459,7 +475,7 @@ CCX通过管理Claude Code的配置文件来实现API提供商和模型的切换
 ```
 
 **Claude配置修改**:
-当执行`ccx use kimi`时，CCX会：
+当执行`cc-sw use kimi`时，CCX会：
 1. 读取`~/.claude/settings.json`
 2. 更新以下字段：
    ```json
@@ -559,35 +575,35 @@ Body:
 **场景1：开发与测试切换**
 ```bash
 # 开发时使用 Anthropic Claude
-ccx use anthropic
+cc-sw use anthropic
 
 # 测试长文本处理时切换到 Kimi 128K
-ccx use kimi-128k
+cc-sw use kimi-128k
 
 # 快速任务切换到 8K 模型
-ccx use kimi-8k
+cc-sw use kimi-8k
 ```
 
 **场景2：多模型测试**
 ```bash
 # 为同一提供商添加不同模型配置
-ccx add kimi-dev     # 开发环境用 8K
-ccx add kimi-test    # 测试环境用 32K  
-ccx add kimi-prod    # 生产环境用 128K
+cc-sw add kimi-dev     # 开发环境用 8K
+cc-sw add kimi-test    # 测试环境用 32K  
+cc-sw add kimi-prod    # 生产环境用 128K
 
 # 在不同环境间快速切换
-ccx use kimi-dev
-ccx use kimi-test
-ccx use kimi-prod
+cc-sw use kimi-dev
+cc-sw use kimi-test
+cc-sw use kimi-prod
 ```
 
 **场景3：成本优化**
 ```bash
 # 简单任务使用 8K 模型（成本更低）
-ccx use kimi-8k
+cc-sw use kimi-8k
 
 # 复杂任务使用 128K 模型（处理能力更强）
-ccx use kimi-128k
+cc-sw use kimi-128k
 ```
 
 ## Development
@@ -597,7 +613,7 @@ ccx use kimi-128k
 ```bash
 # Clone repository
 git clone <repository-url>
-cd ccx
+cd cc-sw
 
 # Install dependencies
 npm install
@@ -618,7 +634,7 @@ npm run lint
 ### Project Structure
 
 ```
-ccx/
+cc-sw/
 ├── src/
 │   ├── cli/           # CLI command implementations
 │   ├── utils/         # Utility functions
@@ -661,7 +677,7 @@ npm test -- list.test.ts
 
 **1. 权限问题**
 ```bash
-chmod +x bin/ccx
+chmod +x bin/cc-sw
 ```
 
 **2. 命令未找到**
@@ -673,25 +689,25 @@ chmod +x bin/ccx
 - 验证 JSON 格式：`cat ~/.claude/providers.json`
 
 **4. API 连接问题**
-- 测试 API 密钥：`ccx test <provider>`
+- 测试 API 密钥：`cc-sw test <provider>`
 - 检查网络连接
 - 验证 API 端点 URL
 
-### ccx use 命令特定问题
+### cc-sw use 命令特定问题
 
 **问题：切换后模型未生效**
 ```bash
 # 解决方案：验证切换结果
-ccx current
+cc-sw current
 
 # 如果模型不正确，手动重新切换
-ccx use kimi
+cc-sw use kimi
 ```
 
 **问题：Kimi API 连接失败**
 ```bash
 # 1. 检查 API 密钥格式
-ccx add kimi
+cc-sw add kimi
 # 确保 API 密钥以 sk- 开头
 
 # 2. 验证基础 URL
@@ -699,7 +715,7 @@ ccx add kimi
 # 错误的 URL：https://api.moonshot.cn (缺少 /v1)
 
 # 3. 测试连接
-ccx test kimi
+cc-sw test kimi
 ```
 
 **问题：模型配置错误**
@@ -710,8 +726,8 @@ ccx test kimi
 # moonshot-v1-128k
 
 # 如果使用了错误的模型名称，重新添加提供商：
-ccx remove kimi
-ccx add kimi
+cc-sw remove kimi
+cc-sw add kimi
 ```
 
 ### 配置文件恢复
@@ -727,7 +743,7 @@ cp ~/.claude/providers.json.backup.2024-xx-xx ~/.claude/providers.json
 
 # 3. 重新初始化配置
 rm ~/.claude/providers.json
-ccx add anthropic
+cc-sw add anthropic
 ```
 
 ### 调试模式
@@ -735,8 +751,8 @@ ccx add anthropic
 启用调试日志：
 
 ```bash
-export DEBUG=ccx:*
-ccx <command>
+export DEBUG=cc-sw:*
+cc-sw <command>
 ```
 
 ## Troubleshooting
@@ -745,7 +761,7 @@ ccx <command>
 
 1. **Permission Denied**
    ```bash
-   chmod +x bin/ccx
+   chmod +x bin/cc-sw
    ```
 
 2. **Command Not Found**
@@ -757,7 +773,7 @@ ccx <command>
    - Validate JSON format: `cat ~/.claude/providers.json`
 
 4. **API Connection Issues**
-   - Test your API key: `ccx test <provider>`
+   - Test your API key: `cc-sw test <provider>`
    - Check your internet connection
    - Verify API endpoint URLs
 
@@ -766,8 +782,8 @@ ccx <command>
 Enable debug logging:
 
 ```bash
-export DEBUG=ccx:*
-ccx <command>
+export DEBUG=cc-sw:*
+cc-sw <command>
 ```
 
 ## Contributing

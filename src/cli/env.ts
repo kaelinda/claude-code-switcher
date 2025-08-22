@@ -44,9 +44,9 @@ export function envCommand(program: Command): void {
           
           // Show usage examples
           console.log(chalk.cyan('\nUsage Examples:'));
-          console.log(chalk.blue('  ccx env --show     # Show current environment variables'));
-          console.log(chalk.blue('  ccx env --export   # Export for shell eval'));
-          console.log(chalk.blue('  eval $(ccx env --export)  # Apply immediately'));
+          console.log(chalk.blue('  cc-sw env --show     # Show current environment variables'));
+          console.log(chalk.blue('  cc-sw env --export   # Export for shell eval'));
+          console.log(chalk.blue('  eval $(cc-sw env --export)  # Apply immediately'));
         }
       } catch (error) {
         console.error(chalk.red('Error managing environment variables:'), error);

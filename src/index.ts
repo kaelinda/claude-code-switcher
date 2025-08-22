@@ -17,7 +17,7 @@ import { envCommand } from './cli/env';
 
 // Program setup
 program
-  .name('ccx')
+  .name('cc-sw')
   .description('Claude Code API provider and model switcher')
   .version(version);
 
@@ -81,9 +81,9 @@ program
   .command('help')
   .description('Display help information')
   .action(() => {
-    console.log(chalk.cyan('\nCCX - Claude Code API Provider and Model Switcher\n'));
+    console.log(chalk.cyan('\nClaudeCodeSwitcher - CLI tool for switching between Claude Code API providers\n'));
     console.log(chalk.yellow('Usage:'));
-    console.log('  ccx <command> [options]\n');
+    console.log('  cc-sw <command> [options]\n');
     console.log(chalk.yellow('Commands:'));
     console.log('  list, ls              List all available API providers');
     console.log('  current, curr         Show current API provider');
@@ -97,12 +97,12 @@ program
     console.log('  help                  Display help information');
     console.log('  --version             Show version information\n');
     console.log(chalk.yellow('Examples:'));
-    console.log('  ccx list              # List all providers');
-    console.log('  ccx use anthropic     # Switch to Anthropic provider and model');
-    console.log('  ccx test openai       # Test OpenAI connection');
-    console.log('  ccx config            # Open config file');
-    console.log('  ccx env --show        # Show current environment variables');
-    console.log('  eval $(ccx env --export)  # Apply environment variables immediately\n');
+    console.log('  cc-sw list              # List all providers');
+    console.log('  cc-sw use anthropic     # Switch to Anthropic provider and model');
+    console.log('  cc-sw test openai       # Test OpenAI connection');
+    console.log('  cc-sw config            # Open config file');
+    console.log('  cc-sw env --show        # Show current environment variables');
+    console.log('  eval $(cc-sw env --export)  # Apply environment variables immediately\n');
   });
 
 // Parse arguments

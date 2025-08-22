@@ -27,7 +27,10 @@
       "Bash(gh repo create:*)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(compgen:*)",
+      "Bash(npm search:*)",
+      "Bash(sed:*)"
     ],
     "deny": []
   }

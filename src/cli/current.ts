@@ -27,11 +27,11 @@ export async function currentCommand(): Promise<void> {
         console.log();
       } else {
         console.log(format.error(`Configured provider '${config.current}' not found in configuration.`));
-        console.log(colors.info('Use "ccx use <provider>" to select a valid provider.\n'));
+        console.log(colors.info('Use "cc-sw use <provider>" to select a valid provider.\n'));
       }
     } else {
       console.log(format.warning('No provider currently configured.'));
-      console.log(colors.info('Use "ccx use <provider>" to select a provider.\n'));
+      console.log(colors.info('Use "cc-sw use <provider>" to select a provider.\n'));
     }
     
     // Show environment variable status

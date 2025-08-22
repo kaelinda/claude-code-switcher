@@ -22,7 +22,7 @@ export async function useCommand(providerName: string, options: {
       Object.keys(config.providers).forEach(name => {
         console.log(colors.secondary(`  - ${formatProviderName(name)}`));
       });
-      console.log(colors.info('\nUse "ccx add <provider>" to add a new provider.\n'));
+      console.log(colors.info('\nUse "cc-sw add <provider>" to add a new provider.\n'));
       return;
     }
 
@@ -32,7 +32,7 @@ export async function useCommand(providerName: string, options: {
     if (!provider.api_key || !provider.base_url || !provider.model) {
       console.log(format.error(`\n${icons.cross} Provider '${formatProviderName(normalizedProvider)}' has incomplete configuration.`));
       console.log(colors.warning('Required fields: api_key, base_url, model'));
-      console.log(colors.info('\nUse "ccx add <provider>" to update the provider configuration.\n'));
+      console.log(colors.info('\nUse "cc-sw add <provider>" to update the provider configuration.\n'));
       return;
     }
     
@@ -108,7 +108,7 @@ export async function useCommand(providerName: string, options: {
       }
     } else if (!options.skipConfirm) {
       console.log(colors.info('\nTo test the new configuration, run:'));
-      console.log(colors.secondary('  ccx test'));
+      console.log(colors.secondary('  cc-sw test'));
     }
 
   } catch (error) {

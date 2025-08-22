@@ -18,7 +18,7 @@ import {
 } from '../src/utils/env';
 
 describe('Environment Variable Management', () => {
-  const tempDir = path.join(os.tmpdir(), 'ccx-env-test');
+  const tempDir = path.join(os.tmpdir(), 'cc-sw-env-test');
   const originalHome = os.homedir();
   let testConfigPath: string;
 

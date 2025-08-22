@@ -14,7 +14,7 @@ import {
 } from '../src/utils/config';
 
 describe('Configuration Management', () => {
-  const tempDir = path.join(os.tmpdir(), 'ccx-config-test');
+  const tempDir = path.join(os.tmpdir(), 'cc-sw-config-test');
   const originalHome = os.homedir();
   let testConfigPath: string;
 
