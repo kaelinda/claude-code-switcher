@@ -8,7 +8,7 @@ export async function currentCommand(): Promise<void> {
     const config = await loadProvidersConfig();
     const envStatus = await getEnvStatus();
     
-    console.log(format.section('CCX Configuration Status'));
+    console.log(format.section('cc-sw Configuration Status'));
     
     // Show configured provider with enhanced styling
     if (config.current) {

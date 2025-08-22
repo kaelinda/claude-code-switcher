@@ -1,4 +1,4 @@
-# CCX - Claude Code API Provider and Model Switcher
+# cc-sw - Claude Code API Provider and Model Switcher
 
 A powerful command-line tool for switching between different API providers and their corresponding models in Claude Code.
 
@@ -424,13 +424,13 @@ cc-sw add provider1 && cc-sw add provider2 && cc-sw use provider1
 
 ### 工作原理
 
-CCX通过管理Claude Code的配置文件来实现API提供商和模型的切换。以下是详细的工作原理：
+cc-sw通过管理Claude Code的配置文件来实现API提供商和模型的切换。以下是详细的工作原理：
 
 ### 核心机制
 
 **1. 配置文件管理**
 - **提供商配置**: `~/.claude/providers.json` - 存储所有API提供商的配置信息
-- **Claude配置**: `~/.claude/settings.json` - Claude Code的主配置文件，CCX通过修改此文件来切换提供商
+- **Claude配置**: `~/.claude/settings.json` - Claude Code的主配置文件，cc-sw通过修改此文件来切换提供商
 
 **2. 切换流程**
 ```
@@ -475,7 +475,7 @@ CCX通过管理Claude Code的配置文件来实现API提供商和模型的切换
 ```
 
 **Claude配置修改**:
-当执行`cc-sw use kimi`时，CCX会：
+当执行`cc-sw use kimi`时，cc-sw会：
 1. 读取`~/.claude/settings.json`
 2. 更新以下字段：
    ```json
@@ -490,7 +490,7 @@ CCX通过管理Claude Code的配置文件来实现API提供商和模型的切换
 
 ### 连接测试机制
 
-CCX在切换前会测试API连接，确保目标提供商可用：
+cc-sw在切换前会测试API连接，确保目标提供商可用：
 
 ```typescript
 // 发送测试请求

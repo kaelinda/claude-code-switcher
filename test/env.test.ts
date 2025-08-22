@@ -109,7 +109,7 @@ describe('Environment Variable Management', () => {
       expect(content).toContain('ANTHROPIC_AUTH_TOKEN="test-token"');
       expect(content).toContain('ANTHROPIC_BASE_URL="https://test.com"');
       expect(content).toContain('ANTHROPIC_MODEL="test-model"');
-      expect(content).toContain('# CCX - Claude Code API Provider Configuration');
+      expect(content).toContain('# cc-sw - Claude Code API Provider Configuration');
     });
 
     it('should replace existing environment variables', async () => {
@@ -172,7 +172,7 @@ describe('Environment Variable Management', () => {
 # Some other configuration
 export PATH=/usr/bin:$PATH
 
-# CCX - Claude Code API Provider Configuration
+# cc-sw - Claude Code API Provider Configuration
 export ANTHROPIC_AUTH_TOKEN="config-token"
 export ANTHROPIC_BASE_URL="https://config.com"
 export ANTHROPIC_MODEL="config-model"

@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import os from 'os';
 
-describe('CCX CLI Integration Tests', () => {
+describe('cc-sw CLI Integration Tests', () => {
   const tempDir = path.join(os.tmpdir(), 'cc-sw-test');
   const originalProvidersPath = path.join(os.homedir(), '.claude', 'providers.json');
   const originalZshrcPath = path.join(os.homedir(), '.zshrc');
@@ -90,7 +90,7 @@ describe('CCX CLI Integration Tests', () => {
     it('should show current configuration', () => {
       const result = runCommand('current');
       expect(result.status).toBe(0);
-      expect(result.stdout).toContain('CCX Configuration Status');
+      expect(result.stdout).toContain('cc-sw Configuration Status');
       expect(result.stdout).toContain('Environment Configuration Status');
     });
 

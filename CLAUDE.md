@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **ccx** command-line tool project - a Claude Code API provider switcher that allows users to manage and switch between different API providers for Claude Code.
+This is a **cc-sw** command-line tool project - a Claude Code API provider switcher that allows users to manage and switch between different API providers for Claude Code.
 
 ## Development Setup
 
@@ -41,19 +41,19 @@ npm run lint         # Run ESLint
 npm run pkg          # Package executables for different platforms
 
 # CLI commands (after building or running dev mode)
-ccx list             # List all API providers
-ccx current          # Show current provider
-ccx use <provider>   # Switch to provider
-ccx add <provider>   # Add new provider
-ccx remove <provider> # Remove provider
-ccx test [provider]  # Test API connection
-ccx config           # Open config file
+cc-sw list             # List all API providers
+cc-sw current          # Show current provider
+cc-sw use <provider>   # Switch to provider
+cc-sw add <provider>   # Add new provider
+cc-sw remove <provider> # Remove provider
+cc-sw test [provider]  # Test API connection
+cc-sw config           # Open config file
 ```
 
 ## Project Structure
 
 ```
-ccx/
+cc-sw/
 ├── src/
 │   ├── cli/           # CLI command implementations
 │   │   ├── list.ts    # List providers command
@@ -68,7 +68,7 @@ ccx/
 │   │   └── api.ts     # API testing utilities
 │   └── index.ts       # Main CLI entry point
 ├── bin/
-│   └── ccx           # Executable entry point
+│   └── cc-sw           # Executable entry point
 ├── dist/              # Compiled output
 ├── package.json       # Project configuration
 ├── tsconfig.json      # TypeScript configuration

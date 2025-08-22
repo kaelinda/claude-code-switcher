@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Test script for CCX environment variable fix
+# Test script for cc-sw environment variable fix
 
-echo "Testing CCX environment variable fix..."
+echo "Testing cc-sw environment variable fix..."
 echo "======================================"
 
-# Test 1: Check if ccx env --export works
-echo -e "\n1. Testing 'ccx env --export':"
+# Test 1: Check if cc-sw env --export works
+echo -e "\n1. Testing 'cc-sw env --export':"
 npm run dev -- env --export
 
 # Test 2: Check if environment variables are set
@@ -16,7 +16,7 @@ echo "ANTHROPIC_BASE_URL: $ANTHROPIC_BASE_URL"
 echo "ANTHROPIC_MODEL: $ANTHROPIC_MODEL"
 
 # Test 3: Test use command with eval mode
-echo -e "\n3. Testing 'ccx use --eval' functionality:"
+echo -e "\n3. Testing 'cc-sw use --eval' functionality:"
 npm run dev -- use zhipu --eval --skip-test
 
 # Test 4: Test switching to another provider

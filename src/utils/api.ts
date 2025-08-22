@@ -17,7 +17,7 @@ export async function testProviderConnection(config: ProviderConfig): Promise<Te
     // Prepare headers
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'User-Agent': 'ccx/1.0.0',
+      'User-Agent': 'cc-sw/1.0.0',
       ...config.headers
     };
 

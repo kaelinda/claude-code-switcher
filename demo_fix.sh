@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "=== CCX Environment Variable Fix Demo ==="
+echo "=== cc-sw Environment Variable Fix Demo ==="
 echo
 
 echo "1. Show current environment variables:"
@@ -23,7 +23,7 @@ echo
 echo "✅ Environment variable fix is working!"
 echo
 echo "Usage examples:"
-echo "  ccx env --show           # Show current environment variables"
-echo "  ccx env --export          # Export for shell eval"
-echo "  eval \$(ccx env --export)  # Apply environment variables immediately"
-echo "  ccx use <provider> --eval --skip-test  # Switch and export"
+echo "  cc-sw env --show           # Show current environment variables"
+echo "  cc-sw env --export          # Export for shell eval"
+echo "  eval \$(cc-sw env --export)  # Apply environment variables immediately"
+echo "  cc-sw use <provider> --eval --skip-test  # Switch and export"
