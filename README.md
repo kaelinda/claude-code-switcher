@@ -1,5 +1,9 @@
 # cc-sw - Claude Code API Provider and Model Switcher
 
+[![npm version](https://img.shields.io/npm/v/cc-sw.svg)](https://www.npmjs.com/package/cc-sw)
+[![npm downloads](https://img.shields.io/npm/dm/cc-sw.svg)](https://www.npmjs.com/package/cc-sw)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A powerful command-line tool for switching between different API providers and their corresponding models in Claude Code.
 
 ## Features
@@ -14,12 +18,12 @@ A powerful command-line tool for switching between different API providers and t
 
 ## Installation
 
-### From Source
+### From Source (Development)
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd cc-sw
+git clone https://github.com/kaelinda/claude-code-switcher.git
+cd claude-code-switcher
 
 # Install dependencies
 npm install
@@ -31,10 +35,30 @@ npm run build
 npm install -g .
 ```
 
-### Using Package Manager (when published)
+Use this method if you want to install from source or contribute to development.
+
+### Using npm (Recommended)
 
 ```bash
 npm install -g cc-sw
+```
+
+This is the easiest way to install cc-sw globally on your system.
+
+### Verify Installation
+
+After installation, verify that cc-sw is working:
+
+```bash
+cc-sw --version
+```
+
+### Uninstall
+
+To uninstall cc-sw:
+
+```bash
+npm uninstall -g cc-sw
 ```
 
 ## Quick Start
